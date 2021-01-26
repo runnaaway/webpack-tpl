@@ -1,0 +1,12 @@
+@import "mixins";
+@import "fonts";
+@import "vendor";
+@import "vars";
+@import "settings";
+
+body {
+	background-image: url("../img/2.jpg");
+	color: red;
+    border: 100px solid black;
+    transition: all 200ms linear;
+}
