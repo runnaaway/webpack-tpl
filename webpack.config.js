@@ -8,10 +8,11 @@ const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plug
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 
+const filename = (ext) => isDev ? `[name].${ext}` : `[name].[contenthash].${ext}`;
+
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
 
-const filename = (ext) => isDev ? `[name].${ext}` : `[name].[contenthash].${ext}`;
 
 const optimization = () => {
   const config = {
@@ -33,7 +34,7 @@ const optimization = () => {
 const plugins = () => {
   const basePlugins = [
   new HTMLWebpackPlugin({
-      template: path.resolve(__dirname, 'src/index.html'),
+      template: path.resolve(__dirname, 'src/index.pug'),
       filename: 'index.html',
       minify: {
         collapseWhitespace: isProd
@@ -106,10 +107,13 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.html$/,
+        test: /\.pug$/,
         use: [
           {
-            loader: 'html-loader'
+            loader: 'pug-loader',
+            options: {
+              pretty: true
+            }
           }
         ]
       },
