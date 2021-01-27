@@ -3,7 +3,7 @@
 import $ from 'jquery';
 
 import '../scss/main.scss';
-import '../index.pug';
+import '../tpl/pages/index/index.pug';
 
 
 const a = 9;

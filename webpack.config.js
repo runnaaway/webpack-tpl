@@ -34,24 +34,31 @@ const optimization = () => {
 const plugins = () => {
   const basePlugins = [
   new HTMLWebpackPlugin({
-      template: path.resolve(__dirname, 'src/index.pug'),
-      filename: 'index.html',
-      minify: {
-        collapseWhitespace: isProd
+    template: path.resolve(__dirname, 'src/tpl/pages/index/index.pug'),
+    filename: 'index.html',
+    minify: {
+      collapseWhitespace: isProd
+    }
+  }),
+  new HTMLWebpackPlugin({
+    template: path.resolve(__dirname, 'src/tpl/pages/blog/blog.pug'),
+    filename: 'blog.html',
+    minify: {
+      collapseWhitespace: isProd
+    }
+  }),
+  new CleanWebpackPlugin(),
+  new MiniCssExtractPlugin({
+    filename: `./css/${filename('css')}`,
+  }),
+  new CopyWebpackPlugin({
+    patterns: [
+      {
+        from: path.resolve(__dirname, 'src/assets'),
+        to: path.resolve(__dirname, 'app')
       }
-    }),
-    new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin({
-      filename: `./css/${filename('css')}`,
-    }),
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: path.resolve(__dirname, 'src/assets'),
-          to: path.resolve(__dirname, 'app')
-        }
-      ]
-    })
+    ]
+  })
   ];
 
   if (isProd) {
@@ -86,7 +93,10 @@ const plugins = () => {
 module.exports = {
   context: path.resolve(__dirname, 'src'),
   mode: 'development',
-  entry: './js/main.js',
+  entry: {
+    'index': './tpl/pages/index/index.js',
+    'blog': './tpl/pages/blog/blog.js',
+  },
   output: {
     filename: `./js/${filename('js')}`,
     path: path.resolve(__dirname, 'app'),
