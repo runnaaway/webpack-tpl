@@ -35,17 +35,11 @@ const plugins = () => {
   const basePlugins = [
   new HTMLWebpackPlugin({
     template: path.resolve(__dirname, 'src/tpl/pages/index/index.pug'),
-    filename: 'index.html',
-    minify: {
-      collapseWhitespace: isProd
-    }
+    filename: 'index.html'
   }),
   new HTMLWebpackPlugin({
     template: path.resolve(__dirname, 'src/tpl/pages/blog/blog.pug'),
-    filename: 'blog.html',
-    minify: {
-      collapseWhitespace: isProd
-    }
+    filename: 'blog.html'
   }),
   new CleanWebpackPlugin(),
   new MiniCssExtractPlugin({
