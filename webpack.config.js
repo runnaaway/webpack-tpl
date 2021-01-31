@@ -8,7 +8,7 @@ const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plug
 const TerserWebpackPlugin = require('terser-webpack-plugin');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 
-const filename = (ext) => isDev ? `[name].${ext}` : `[name].[contenthash].${ext}`;
+const filename = (ext) => `[name].${ext}`;
 
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
@@ -35,11 +35,13 @@ const plugins = () => {
   const basePlugins = [
   new HTMLWebpackPlugin({
     template: path.resolve(__dirname, 'src/tpl/pages/index/index.pug'),
-    filename: 'index.html'
+    filename: 'index.html',
+    minify: false
   }),
   new HTMLWebpackPlugin({
     template: path.resolve(__dirname, 'src/tpl/pages/blog/blog.pug'),
-    filename: 'blog.html'
+    filename: 'blog.html',
+    minify: false
   }),
   new CleanWebpackPlugin(),
   new MiniCssExtractPlugin({
@@ -58,9 +60,7 @@ const plugins = () => {
   if (isProd) {
     basePlugins.push(
       new ImageMinimizerPlugin({
-        bail: false, 
-        cache: true,
-        imageminOptions: {
+        minimizerOptions: {
           plugins: [
             ["gifsicle", { interlaced: true }],
             ["jpegtran", { progressive: true }],
@@ -88,6 +88,7 @@ module.exports = {
   context: path.resolve(__dirname, 'src'),
   mode: 'development',
   entry: {
+    'main': './js/main.js',
     'index': './tpl/pages/index/index.js',
     'blog': './tpl/pages/blog/blog.js',
   },
